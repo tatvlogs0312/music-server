@@ -4,7 +4,8 @@ var config = require('../connections/ConnectDB')
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-    config.query('select * from song', (err, result) => {
+    const query = 'select * from song'
+    config.query(query, (err, result) => {
         if (err) {
             res.status(500).send(err)
         }
