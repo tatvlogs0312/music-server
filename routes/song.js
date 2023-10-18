@@ -1,16 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var config = require('../connections/ConnectDB')
+const express = require("express");
+const router = express.Router();
+const SongService = require("../lib/services/SongService");
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-    const query = 'select * from song'
-    config.query(query, (err, result) => {
-        if (err) {
-            res.status(500).send(err)
-        }
-        res.status(200).send(result.rows)
-    })
+router.get("/", function (req, res, next) {
+  SongService.GetSongData()
+    .then((data) => res.send(data).status(200))
+    .catch((error) => res.send(error).status(500));
 });
 
 module.exports = router;
