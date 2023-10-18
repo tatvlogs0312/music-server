@@ -4,12 +4,9 @@ const SongService = require("../lib/services/SongService");
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
-  SongService.GetSong()
+  SongService.GetSongData()
     .then((data) => res.send(data).status(200))
-    .catch((error) => {
-      console.log(error);
-      res.send({ error: error.code, message: "Có lỗi xảy ra!" }).status(500);
-    });
+    .catch((error) => res.send(error).status(500));
 });
 
 module.exports = router;
