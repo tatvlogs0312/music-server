@@ -5,7 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var songRouter = require('./routes/song')
+var songRouter = require('./routes/song');
+var artistRouter = require('./routes/artist')
+var albumRouter = require('./routes/album')
 
 var app = express();
 
@@ -21,6 +23,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/song', songRouter);
+app.use('/albums',albumRouter);
+app.use('/artist',artistRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
