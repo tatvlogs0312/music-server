@@ -20,4 +20,13 @@ router.put("/update-listen/:id", (req, res, next) => {
   }
 })
 
+router.get("/search", (req, res, next) => {
+  try {
+    let keyword = req.query.keyword || '';
+    let size = req.query.size || Number.MAX_SAFE_INTEGER;
+  } catch (error) {
+    res.send("Có lỗi xảy ra.").status(500)
+  }
+})
+
 module.exports = router;
