@@ -8,4 +8,10 @@ router.get("/", function (req, res, next) {
     .catch((error) => res.send(error).status(500));
 });
 
+router.get("/limit", function (req, res, next) {
+    AlbumService.Get10Album()
+    .then((data) => res.send(data).status(200))
+    .catch((error) => res.send(error).status(500));
+});
+
 module.exports = router;
