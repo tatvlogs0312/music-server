@@ -20,10 +20,11 @@ router.put("/update-listen/:id", (req, res, next) => {
   }
 })
 
-router.get("/search", (req, res, next) => {
+router.get("/search", async (req, res, next) => {
   try {
-    let keyword = req.query.keyword || '';
-    let size = req.query.size || Number.MAX_SAFE_INTEGER;
+    let keyword = req.query.keyword;
+    const data = await SongService.Search(keyword);
+    res.send(data).status(200);
   } catch (error) {
     res.send("Có lỗi xảy ra.").status(500)
   }
