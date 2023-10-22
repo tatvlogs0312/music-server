@@ -40,4 +40,16 @@ router.get("/search", async (req, res, next) => {
   }
 })
 
+/**
+ * API lấy bài hát theo ID
+ */
+router.get("/:id", async (req, res, next) => {
+  try {
+    const data = await SongService.GetSongDataByID(req.params.id);
+    res.send(data).status(200);
+  } catch (error) {
+    res.send(error).status(500);
+  }
+});
+
 module.exports = router;
