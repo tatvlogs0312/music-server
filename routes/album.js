@@ -14,4 +14,17 @@ router.get("/limit", function (req, res, next) {
     .catch((error) => res.send(error).status(500));
 });
 
+/**
+ * API lấy albums theo id
+ */
+router.get("/:id", async (req, res, next) => {
+    try {
+        const data = await AlbumService.GetAblumsDataByID(req.params.id);
+        res.send(data).status(200);
+    } catch (error) {
+        console.log(error);
+        res.send(error).status(500);
+    }
+})
+
 module.exports = router;
