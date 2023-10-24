@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const ArtistService = require("../lib/services/ArtistService");
+const { Error } = require("../lib/constants/Constants");
 
 router.get("/", function (req, res, next) {
   ArtistService.GetAllArtist()
@@ -22,7 +23,8 @@ router.get("/:id", async (req, res, next) => {
     const data = await ArtistService.GetArtistDataByID(req.params.id);
     res.send(data).status(200);
   } catch (error) {
-    res.send(error).status(500);
+    console.log(error);
+    res.send(Error.E_INTERNAL_ERROR).status(500);
   }
 });
 

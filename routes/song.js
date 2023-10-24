@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const SongService = require("../lib/services/SongService");
 const Utils = require("../lib/utils/Utils")
+const { Error } = require("../lib/constants/Constants");
 
 /**
  * API lấy tất cả bài hát
@@ -22,7 +23,8 @@ router.put("/update-listen/:id", (req, res, next) => {
     SongService.UpdateListens(id)
     res.send().status(200)
   } catch(error) {
-    res.send("Có lỗi xảy ra.").status(500)
+    console.log(error);
+    res.send(Error.E_INTERNAL_ERROR).status(500);
   }
 })
 
@@ -36,7 +38,8 @@ router.get("/search", async (req, res, next) => {
     const data = await SongService.Search(keyword);
     res.send(data).status(200);
   } catch (error) {
-    res.send("Có lỗi xảy ra.").status(500)
+    console.log(error);
+    res.send(Error.E_INTERNAL_ERROR).status(500);
   }
 })
 
@@ -48,7 +51,8 @@ router.get("/:id", async (req, res, next) => {
     const data = await SongService.GetSongDataByID(req.params.id);
     res.send(data).status(200);
   } catch (error) {
-    res.send(error).status(500);
+    console.log(error);
+    res.send(Error.E_INTERNAL_ERROR).status(500);
   }
 });
 
