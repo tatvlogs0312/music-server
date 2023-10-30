@@ -44,7 +44,22 @@ router.get("/search", async (req, res, next) => {
 })
 
 /**
- * API lấy tất cả bài hát
+ * API lấy tất cả bài hát nghe nhiều
+ */
+router.get("/top", async (req, res, next) => {
+  try {
+    let size = req.query.size;
+    console.log(size);
+    const data = await SongService.GetTopSongDataLimit(size);
+    res.send(data).status(200);
+  } catch (error) {
+    console.log(error);
+    res.send(Error.E_INTERNAL_ERROR).status(500);
+  }
+});
+
+/**
+ * API lấy tất cả bài hát theo size
  */
 router.get("/limit", async (req, res, next) => {
   try {
