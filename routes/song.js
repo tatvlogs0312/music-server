@@ -9,8 +9,8 @@ const { Error } = require("../lib/constants/Constants");
  */
 router.get("/", function (req, res, next) {
   SongService.GetSongData()
-    .then((data) => res.send(data).status(200))
-    .catch((error) => res.send(error).status(500));
+    .then((data) => res.status(200).send(data))
+    .catch((error) => res.status(500).send(error));
 });
 
 /**
@@ -21,10 +21,10 @@ router.put("/update-listen/:id", (req, res, next) => {
     const id = req.params.id
     console.log(id)
     SongService.UpdateListens(id)
-    res.send().status(200)
+    res.status(200).send();
   } catch(error) {
     console.log(error);
-    res.send(Error.E_INTERNAL_ERROR).status(500);
+    res.status(500).send(Error.E_INTERNAL_ERROR);
   }
 })
 
@@ -36,10 +36,10 @@ router.get("/search", async (req, res, next) => {
     let keyword = req.query.keyword || '';
     keyword = Utils.toValueSearch(keyword);
     const data = await SongService.Search(keyword);
-    res.send(data).status(200);
+    res.status(200).send(data);
   } catch (error) {
     console.log(error);
-    res.send(Error.E_INTERNAL_ERROR).status(500);
+    res.status(500).send(Error.E_INTERNAL_ERROR);
   }
 })
 
@@ -51,10 +51,10 @@ router.get("/top", async (req, res, next) => {
     let size = req.query.size;
     console.log(size);
     const data = await SongService.GetTopSongDataLimit(size);
-    res.send(data).status(200);
+    res.status(200).send(data);
   } catch (error) {
     console.log(error);
-    res.send(Error.E_INTERNAL_ERROR).status(500);
+    res.status(500).send(Error.E_INTERNAL_ERROR);
   }
 });
 
@@ -66,10 +66,10 @@ router.get("/limit", async (req, res, next) => {
     let size = req.query.size || '12';
     console.log(size);
     const data = await SongService.GetSongDataLimit(size);
-    res.send(data).status(200);
+    res.status(200).send(data);
   } catch (error) {
     console.log(error);
-    res.send(Error.E_INTERNAL_ERROR).status(500);
+    res.status(500).send(Error.E_INTERNAL_ERROR);
   }
 });
 
@@ -79,10 +79,10 @@ router.get("/limit", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const data = await SongService.GetSongDataByID(req.params.id);
-    res.send(data).status(200);
+    res.status(200).send(data);
   } catch (error) {
     console.log(error);
-    res.send(Error.E_INTERNAL_ERROR).status(500);
+    res.status(500).send(Error.E_INTERNAL_ERROR);
   }
 });
 
