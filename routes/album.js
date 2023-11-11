@@ -10,7 +10,8 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/limit", function (req, res, next) {
-    AlbumService.Get10Album()
+    const size = req.query.size || 10000;
+    AlbumService.Get10Album(size)
       .then((data) => res.status(200).send(data))
       .catch((error) => res.status(500).send(error));
 });
