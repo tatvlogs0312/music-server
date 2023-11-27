@@ -19,7 +19,6 @@ router.get("/", function (req, res, next) {
 router.put("/update-listen/:id", (req, res, next) => {
   try {
     const id = req.params.id
-    console.log(id)
     SongService.UpdateListens(id)
     res.status(200).send();
   } catch(error) {
@@ -49,7 +48,6 @@ router.get("/search", async (req, res, next) => {
 router.get("/top", async (req, res, next) => {
   try {
     let size = req.query.size;
-    console.log(size);
     const data = await SongService.GetTopSongDataLimit(size);
     res.status(200).send(data);
   } catch (error) {
@@ -64,7 +62,6 @@ router.get("/top", async (req, res, next) => {
 router.get("/limit", async (req, res, next) => {
   try {
     let size = req.query.size || '12';
-    console.log(size);
     const data = await SongService.GetSongDataLimit(size);
     res.status(200).send(data);
   } catch (error) {
