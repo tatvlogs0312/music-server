@@ -3,13 +3,14 @@ var router = express.Router();
 var UserService = require("../lib/services/UserService");
 const { Constants } = require("../lib/constants/Constants");
 var jwt = require("jsonwebtoken");
+const JwtUtils = require("../lib/utils/JwtUtils");
 
 /* GET home page. */
 router.post("/login", async function (req, res, next) {
   try {
     const account = req.body;
     const data = await UserService.Login(account);
-    const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SERCET, {
+    const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: 100000000,
     });
     res.json({ accessToken }).status(200);
@@ -18,9 +19,20 @@ router.post("/login", async function (req, res, next) {
   }
 });
 
-router.get("/me", function (req, res) {
+router.get("/me", authenToken, function (req, res) {
+  res.sendStatus(200)
+});
 
-})
+function authenToken(req, res, next) {
+  const token = req.headers["authorization"];
+  if (!token) res.sendStatus(401);
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, data) => {
+    if (err) res.sendStatus(403);
+    console.log(err);
+    next();
+  });
+}
+
 
 router.post("/register", async (req, res, next) => {
   try {
