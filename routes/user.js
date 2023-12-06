@@ -19,7 +19,10 @@ router.post("/login", async function (req, res, next) {
   }
 });
 
-router.get("/me", authenToken, function (req, res) {
+router.get("/me", function (req, res) {
+  const token = req.headers["authorization"];
+  const user = JwtUtils.getUserName(token);
+  console.log(user);
   res.sendStatus(200)
 });
 
