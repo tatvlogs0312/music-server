@@ -22,16 +22,6 @@ router.post("/login", async function (req, res, next) {
 });
 
 /**
- * me
- */
-router.get("/me", async function (req, res) {
-  const token = req.headers["authorization"];
-  const user = await JwtUtils.getUserName(token);
-  const me = await UserService.getMe(user);
-  res.status(200).send(me);
-});
-
-/**
  * Đăng kí tài khoản
  */
 router.post("/register", async (req, res, next) => {
@@ -50,5 +40,23 @@ router.post("/register", async (req, res, next) => {
     res.status(error.status || 500).send(error);
   }
 });
+
+/**
+ * me
+ */
+router.get("/me", async function (req, res) {
+  const token = req.headers["authorization"];
+  const user = await JwtUtils.getUserName(token);
+  const me = await UserService.GetMe(user);
+  res.status(200).send(me);
+});
+
+/**
+ * Đổi mật khẩu
+ */
+router.put("/change-password", (req, res) => {
+  UserService.ChangePassword(req.body)
+  res.status(200).send();
+})
 
 module.exports = router;
