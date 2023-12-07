@@ -12,6 +12,14 @@ router.get("/image/:filename", function (req, res, next) {
 });
 
 /**
+ * API lấy ảnh
+ */
+router.get("/avatar/:filename", function (req, res, next) {
+  const filePath = FileService.getAvatar(req.params.filename);
+  res.sendFile(path.resolve(filePath));
+});
+
+/**
  * API lấy file mp3
  */
 router.get("/mp3/:filename", function (req, res, next) {

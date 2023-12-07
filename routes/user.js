@@ -5,7 +5,9 @@ const { Constants } = require("../lib/constants/Constants");
 var jwt = require("jsonwebtoken");
 const JwtUtils = require("../lib/utils/JwtUtils");
 
-/* GET home page. */
+/**
+ * Login
+ */
 router.post("/login", async function (req, res, next) {
   try {
     const account = req.body;
@@ -19,24 +21,19 @@ router.post("/login", async function (req, res, next) {
   }
 });
 
-router.get("/me", function (req, res) {
+/**
+ * me
+ */
+router.get("/me", async function (req, res) {
   const token = req.headers["authorization"];
-  const user = JwtUtils.getUserName(token);
-  console.log(user);
-  res.sendStatus(200)
+  const user = await JwtUtils.getUserName(token);
+  const me = await UserService.getMe(user);
+  res.status(200).send(me);
 });
 
-function authenToken(req, res, next) {
-  const token = req.headers["authorization"];
-  if (!token) res.sendStatus(401);
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, data) => {
-    if (err) res.sendStatus(403);
-    console.log(err);
-    next();
-  });
-}
-
-
+/**
+ * Đăng kí tài khoản
+ */
 router.post("/register", async (req, res, next) => {
   try {
     const request = {
