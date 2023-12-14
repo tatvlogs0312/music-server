@@ -54,9 +54,13 @@ router.get("/me", async function (req, res) {
 /**
  * Đổi mật khẩu
  */
-router.put("/change-password", (req, res) => {
-  UserService.ChangePassword(req.body)
-  res.status(200).send();
+router.put("/forgot-password", async (req, res) => {
+  try {
+    await UserService.ForgotPassword(req.body);
+    res.status(200).send();
+  } catch (error) {
+    res.status(error.status || 500).send(error)
+  }
 })
 
 module.exports = router;
