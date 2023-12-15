@@ -59,8 +59,27 @@ router.put("/forgot-password", async (req, res) => {
     await UserService.ForgotPassword(req.body);
     res.status(200).send();
   } catch (error) {
-    res.status(error.status || 500).send(error)
+    res.status(error.status || 500).send(error);
   }
-})
+});
+
+router.put("/change-password", async (req, res) => {
+  try {
+    await UserService.ChangePassword(req.body);
+    res.status(200).send();
+  } catch (error) {
+    res.status(error.status || 500).send(error);
+  }
+});
+
+router.put("/update-history", async (req, res) => {
+  try {
+    const { idSong, idUser } = req.body;
+    await UserService.updateListenHistory(idSong, idUser);
+    res.status(200).send();
+  } catch (error) {
+    res.status(error.status || 500).send(error);
+  }
+});
 
 module.exports = router;
