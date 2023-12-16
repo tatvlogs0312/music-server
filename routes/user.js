@@ -82,4 +82,17 @@ router.put("/update-history", async (req, res) => {
   }
 });
 
+router.get("/history-list", async function (req, res) {
+  try {
+    const token = req.headers["authorization"];
+    const user = await JwtUtils.getUserName(token);
+    const page = req.query.page || 0;
+    const size = req.query.size || 10;
+    const me = await UserService.GetSongHistory(user.id, page, size);
+    res.status(200).send(me);
+  } catch (error) {
+    res.status(error.status).send(error.msg);
+  }
+});
+
 module.exports = router;
